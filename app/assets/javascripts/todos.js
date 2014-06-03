@@ -60,11 +60,48 @@ $(function(){
 
     App.saveModel = function(model, callback){
         // DO SOME STUFF HERE TO PERSIST DATA
+// -----------------------------------------------
+    var title = $('#todo_title').val();
+    var completed = $('.done-true').val();
+
+    $.ajax({
+      url : this.urls.create.path,
+      type : this.urls.create.method,
+      data: {
+        "todo": {
+          "title": title,
+          "completed": completed
+        }
+      },
+      dataType: "json",
+      success: function(data) {
+        console.log(data);
+        $('#todo_title').val('');
+      },
+      error: function(){
+        alert("Server is broken!");
+      }
+    });
+
+//----------------------------------------------------
         callback(model);
     };
 
     App.updateItem = function(model, callback){
-        // DO SOMETHING HERE
+//---------------------------------------------------
+    // var completed = $('.done-true').val();
+
+    $.ajax({
+      url : '/todos/'+model.id+".json",
+      type : 'post',
+      data: {
+        
+          // "completed": completed
+          todo: model
+        }
+   
+    });
+//-------------------------------------------------
         callback(model);  
     };
 
